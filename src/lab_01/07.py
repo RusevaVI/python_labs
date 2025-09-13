@@ -15,3 +15,4 @@ zar=id_2-id_1
 for i in range(id_1,id_p+1,zar):
     word.append(s[i])
 print(f'out:{''.join(word)}')
+
