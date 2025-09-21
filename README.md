@@ -44,8 +44,9 @@ print(f'{m//60}:{m-(60*(m//60)):02d}')
 ### Задание 5
 ```python
 name=str(input('ФИО: '))
-print(f'Инициалы: {(name.split()[0])[0]}{(name.split()[1])[0]}{(name.split()[2])[0]}')
-print(f'Длина (символов):{len(name)}')
+print(f'Инициалы: {(name.split()[0])[0]}{(name.split()[1])[0]}{(name.split()[2])[0]}.')
+name =name.replace(' ','')
+print(f'Длина (символов):{len(name)+2}')
 ```
 [Картинка 1] ![05.png](images/05.png)
 
