@@ -43,38 +43,28 @@
 # print(f(d))
 
 #3
-# a = [[1, 2, 3]]
-# b = [[1], [2], [3]]
-# c = [[1, 2], [3, 4]]
-# d = []
-# e = [[1, 2], [3]]
-#
-#
-# def f1(x):
-#     h = []
-#     for i in x:
-#         if isinstance(i, list):
-#             for k in i:
-#                 h.append([k])
-#         else:
-#             h.append([i])
-#         return h
-#
-#
-# def f2(x):
-#     h = []
-#     for i in x:
-#         for j in i:
-#             h.append(j)
-#     return h
-#
-# def f3(x):
-#     for i in range(len(x) - 1):
-#         if len(x[i]) != len(x[i + 1]):
-#             print(ValueError)
-#
-#
-# print(f1(a))
-# print(f2(b))
-# print(f2(d))
-# print(f3(e))
+a=[[1, 2], [3, 4]]
+b=([1, 2], (3, 4, 5))
+c=[[1], [], [2, 3]]
+d=[[1, 2], "ab"]
+
+def f(a):
+    x=[]
+    y=[]
+    k=0
+    for i in a:
+        for b in i:
+            x.append(b)
+            if type(b)==int:
+                k+=1
+            if k==len(x):
+                y.append(b)
+            else:
+                print('TypeError')
+    if k==len(x):
+        print(y)
+
+print(f(a))
+print(f(b))
+print(f(c))
+print(f(d))
