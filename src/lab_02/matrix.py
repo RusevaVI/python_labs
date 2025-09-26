@@ -24,7 +24,8 @@
 # def f4(x):
 #     for i in range(len(x) - 1):
 #         if len(x[i]) != len(x[i + 1]):
-#             print(ValueError)
+#             print('ValueError')
+#             break
 #
 #
 # print(f1(a))
@@ -49,37 +50,35 @@
 #             for i in x:
 #                 s=sum(i)
 #                 a.append(s)
-#             return a
+#     return a
 # print(F(a))
 # print(F(b))
 # print(F(c))
 # print(F(d))
 
 
-#3
-# a=[[1, 2, 3], [4, 5, 6]]
-# b=[[-1, 1], [10, -10]]
-# c=[[0, 0], [0, 0]]
-# d=[[1, 2], [3]]
-# def F(a):
-#     for i in range(len(a) - 1):
-#         if len(a[i]) != len(a[i + 1]):
-#             print('ValueError')
-#             break
-#         else:
-#             lene = 0
-#             k = 0
-#             for i in a:
-#                 lene = len(i)
-#             summ = [0] * lene
-#             for i in range(len(a)):
-#                 for j in range(lene):
-#                     summ[j] += a[i][j]
-#             print(summ)
-#
-#     return ""
-#
-# print(F(a))
-# print(F(b))
-# print(F(c))
-# print(F(d))
+# #3
+a=[[1, 2, 3], [4, 5, 6]]
+b=[[-1, 1], [10, -10]]
+c=[[0, 0], [0, 0]]
+d=[[1, 2], [3]]
+def F(a):
+    for i in range(len(a) - 1):
+        if len(a[i]) != len(a[i + 1]):
+            print('ValueError')
+            break
+        else:
+            lene = 0
+            k = 0
+            for i in a:
+                lene = len(i)
+            summ = [0] * lene
+            for i in range(len(a)):
+                for j in range(lene):
+                    summ[j] += a[i][j]
+            print(summ)
+    return ''
+print(F(a))
+print(F(b))
+print(F(c))
+print(F(d))
