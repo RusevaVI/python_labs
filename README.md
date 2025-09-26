@@ -99,9 +99,8 @@ c=[-5, -2, -9]
 d=[]
 e=[1.5, 2, 2.0, -3.1]
 def f(b):
-    t=tuple(b)
     s1=[]
-    for i in t:
+    for i in b:
         s1.append(i)
     if len(s1)==0:
         print('ValueError')
