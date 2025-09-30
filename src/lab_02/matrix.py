@@ -1,84 +1,80 @@
 #1
-# a=[[1, 2, 3]]
-# b=[[1], [2], [3]]
-# c = [[1, 2], [3, 4]]
-# d = []
-# e = [[1, 2], [3]]
-# def f1(x):
-#     a=[]
-#     for i in x:
-#         for j in i:
-#             a.append([j])
-#     return a
-# def f2(p):
-#     a=[]
-#     for i in p:
-#         for j in i:
-#             a.append(j)
-#     return a
-# def f3(x):
-#     y=[x[0][0], x[1][0]]
-#     z=[x[0][1], x[1][1]]
-#     return [y,z]
-#
-# def f4(x):
-#     for i in range(len(x) - 1):
-#         if len(x[i]) != len(x[i + 1]):
-#             print('ValueError')
-#             break
-#
-#
-# print(f1(a))
-# print(f2(b))
-# print(f3(c))
-# print(f2(d))
-# print(f4(e))
+test1 = [[1, 2, 3]]
+test2 = [[1], [2], [3]]
+test3 = [[1, 2], [3, 4]]
+test4 = []
+test5 = [[1, 2], [3]]
+def transpose1(mat: list[list[float | int]]) -> list[list]:
+    list1=[]
+    if len(mat)==1:
+        for i in mat:
+            for j in i:
+                list1.append([j])
+        return list1
+    else:
+        for i in mat:
+            for j in i:
+                list1.append(j)
+        return list1
+
+def transpose2(mat: list[list[float | int]]) -> list[list]:
+    if len(mat)==0:
+        return []
+    else:
+        for i in range(len(mat)-1):
+            if len(mat[i])!=len(mat[i+1]):
+                return 'ValueError'
+            else:
+                list1=[mat[0][0], mat[1][0]]
+                list2=[mat[0][1], mat[1][1]]
+                return [list1,list2]
+    return mat
+print(transpose1(test1))
+print(transpose1(test2))
+print(transpose2(test3))
+print(transpose2(test4))
+print(transpose2(test5))
 
 #2
-# a=[[1, 2, 3], [4, 5, 6]]
-# b=[[-1, 1], [10, -10]]
-# c=[[0, 0], [0, 0]]
-# d=[[1, 2], [3]]
-# def F(x):
-#     s=0
-#     a=[]
-#     for i in range(len(x) - 1):
-#         if len(x[i]) != len(x[i + 1]):
-#             print('ValueError')
-#             break
-#         else:
-#             for i in x:
-#                 s=sum(i)
-#                 a.append(s)
-#     return a
-# print(F(a))
-# print(F(b))
-# print(F(c))
-# print(F(d))
+test1=[[1, 2, 3], [4, 5, 6]]
+test2=[[-1, 1], [10, -10]]
+test3=[[0, 0], [0, 0]]
+test4=[[1, 2], [3]]
+def row_sums(mat: list[list[float | int]]) -> list[float]:
+    list1=[]
+    for i in range(len(mat) - 1):
+        if len(mat[i]) != len(mat[i + 1]):
+            return 'ValueError'
+        else:
+            for i in mat:
+                list1.append(sum(i))
+    return list1
+print(row_sums(test1))
+print(row_sums(test2))
+print(row_sums(test3))
+print(row_sums(test4))
 
 
-# #3
-a=[[1, 2, 3], [4, 5, 6]]
-b=[[-1, 1], [10, -10]]
-c=[[0, 0], [0, 0]]
-d=[[1, 2], [3]]
-def F(a):
-    for i in range(len(a) - 1):
-        if len(a[i]) != len(a[i + 1]):
-            print('ValueError')
-            break
+#3
+test1=[[1, 2, 3], [4, 5, 6]]
+test2=[[-1, 1], [10, -10]]
+test3=[[0, 0], [0, 0]]
+test4=[[1, 2], [3]]
+def col_sums(mat: list[list[float | int]]) -> list[float]:
+    for i in range(len(mat) - 1):
+        if len(mat[i]) != len(mat[i + 1]):
+            return 'ValueError'
         else:
             lene = 0
             k = 0
-            for i in a:
+            for i in mat:
                 lene = len(i)
             summ = [0] * lene
-            for i in range(len(a)):
+            for i in range(len(mat)):
                 for j in range(lene):
-                    summ[j] += a[i][j]
-            print(summ)
-    return ''
-print(F(a))
-print(F(b))
-print(F(c))
-print(F(d))
+                    summ[j] += mat[i][j]
+    return summ
+print(col_sums(test1))
+print(col_sums(test2))
+print(col_sums(test3))
+print(col_sums(test4))
