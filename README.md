@@ -93,78 +93,76 @@ print(f'out:{''.join(word)}')
 ### Задание 1
 ```python
 #1
-a=[3,-1,5,5,0]
-b=[42]
-c=[-5, -2, -9]
-d=[]
-e=[1.5, 2, 2.0, -3.1]
-def f(b):
-    s1=[]
-    for i in b:
-        s1.append(i)
-    if len(s1)==0:
+test1=[3,-1,5,5,0]
+test2=[42]
+test3=[-5, -2, -9]
+test4=[]
+test5=[1.5, 2, 2.0, -3.1]
+def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
+    list1=[]
+    for i in nums:
+        list1.append(i)
+    if len(list1)==0:
         print('ValueError')
     else:
-        s2=(min(s1),max(s1))
-        print(s2)
+        res=(min(list1),max(list1))
+        print(res)
     return ''
-print(f(a))
-print(f(b))
-print(f(c))
-print(f(d))
-print(f(e))
-
+print(min_max(test1))
+print(min_max(test2))
+print(min_max(test3))
+print(min_max(test4))
+print(min_max(test5))
 #2
 
-a=[3, 1, 2, 1, 3]
-b=[]
-c=[-1, -1, 0, 2, 2]
-d=[1.0, 1, 2.5, 2.5, 0]
-def f(l):
-    i=[]
-    f=[]
-    for g in l:
-        if type(g)==int:
-            i.append(g)
+test1=[3, 1, 2, 1, 3]
+test2=[]
+test3=[-1, -1, 0, 2, 2]
+test4=[1.0, 1, 2.5, 2.5, 0]
+def unique_sorted(nums: list[float | int]) -> list[float | int]:
+    int_list=[]
+    float_list=[]
+    for i in nums:
+        if type(i)==int:
+            int_list.append(i)
         else:
-            f.append(g)
-    res1 = [x for x in f if int(x) in i]
-    res2 = [x for x in i if float(x)  not in f]
-    print(sorted(set(res1+res2+f)))
+            float_list.append(i)
+    res1 = [x for x in float_list if int(x) in int_list]
+    res2 = [x for x in int_list if float(x)  not in float_list]
+    print(sorted(set(res1+res2+float_list)))
     return ''
-print(f(a))
-print(f(b))
-print(f(c))
-print(f(d))
+print(unique_sorted(test1))
+print(unique_sorted(test2))
+print(unique_sorted(test3))
+print(unique_sorted(test4))
+#3
+test1=[[1, 2], [3, 4]]
+test2=([1, 2], (3, 4, 5))
+test3=[[1], [], [2, 3]]
+test4=[[1, 2], "ab"]
 
-# #3
-a=[[1, 2], [3, 4]]
-b=([1, 2], (3, 4, 5))
-c=[[1], [], [2, 3]]
-d=[[1, 2], "ab"]
-
-def f(a):
-    x=[]
-    y=[]
+def flatten(mat: list[list | tuple]) -> list:
+    list1=[]
+    list2=[]
     k=0
-    for i in a:
-        for b in i:
-            x.append(b)
-            if type(b)==int:
+    for i in mat:
+        for j in i:
+            list1.append(j)
+            if type(j)==int:
                 k+=1
-            if k==len(x):
-                y.append(b)
+            if k==len(list1):
+                list2.append(j)
             else:
                 print('TypeError')
                 break
-    if k==len(x):
-        print(y)
+    if k==len(list1):
+        print(list2)
     return ''
 
-print(f(a))
-print(f(b))
-print(f(c))
-print(f(d))
+print(flatten(test1))
+print(flatten(test2))
+print(flatten(test3))
+print(flatten(test4))
 ```
 [Картинка 1] ![1.1.png](images/1.1.png)
 [Картинка 2] ![1.2.png](images/1.2.png)
@@ -174,86 +172,84 @@ print(f(d))
 ### Задание 2
 ```python
 #1
-a=[[1, 2, 3]]
-b=[[1], [2], [3]]
-c = [[1, 2], [3, 4]]
-d = []
-e = [[1, 2], [3]]
-def f1(x):
-    a=[]
-    for i in x:
-        for j in i:
-            a.append([j])
-    return a
-def f2(p):
-    a=[]
-    for i in p:
-        for j in i:
-            a.append(j)
-    return a
-def f3(x):
-    y=[x[0][0], x[1][0]]
-    z=[x[0][1], x[1][1]]
-    return [y,z]
+test1 = [[1, 2, 3]]
+test2 = [[1], [2], [3]]
+test3 = [[1, 2], [3, 4]]
+test4 = []
+test5 = [[1, 2], [3]]
+def transpose1(mat: list[list[float | int]]) -> list[list]:
+    list1=[]
+    if len(mat)==1:
+        for i in mat:
+            for j in i:
+                list1.append([j])
+        return list1
+    else:
+        for i in mat:
+            for j in i:
+                list1.append(j)
+        return list1
 
-def f4(x):
-    for i in range(len(x) - 1):
-        if len(x[i]) != len(x[i + 1]):
-            print('ValueError')
+def transpose2(mat: list[list[float | int]]) -> list[list]:
+    if len(mat)==0:
+        return []
+    else:
+        for i in range(len(mat)-1):
+            if len(mat[i])!=len(mat[i+1]):
+                return 'ValueError'
+            else:
+                list1=[mat[0][0], mat[1][0]]
+                list2=[mat[0][1], mat[1][1]]
+                return [list1,list2]
+    return mat
+print(transpose1(test1))
+print(transpose1(test2))
+print(transpose2(test3))
+print(transpose2(test4))
+print(transpose2(test5))
 
-print(f1(a))
-print(f2(b))
-print(f3(c))
-print(f2(d))
-print(f4(e))
 
 #2
-a=[[1, 2, 3], [4, 5, 6]]
-b=[[-1, 1], [10, -10]]
-c=[[0, 0], [0, 0]]
-d=[[1, 2], [3]]
-def F(x):
-    s=0
-    a=[]
-    for i in range(len(x) - 1):
-        if len(x[i]) != len(x[i + 1]):
-            print('ValueError')
-            break
+test1=[[1, 2, 3], [4, 5, 6]]
+test2=[[-1, 1], [10, -10]]
+test3=[[0, 0], [0, 0]]
+test4=[[1, 2], [3]]
+def row_sums(mat: list[list[float | int]]) -> list[float]:
+    list1=[]
+    for i in range(len(mat) - 1):
+        if len(mat[i]) != len(mat[i + 1]):
+            return 'ValueError'
         else:
-            for i in x:
-                s=sum(i)
-                a.append(s)
-    return a
-print(F(a))
-print(F(b))
-print(F(c))
-print(F(d))
-
+            for i in mat:
+                list1.append(sum(i))
+    return list1
+print(row_sums(test1))
+print(row_sums(test2))
+print(row_sums(test3))
+print(row_sums(test4))
 #3
-a=[[1, 2, 3], [4, 5, 6]]
-b=[[-1, 1], [10, -10]]
-c=[[0, 0], [0, 0]]
-d=[[1, 2], [3]]
-def F(a):
-    for i in range(len(a) - 1):
-        if len(a[i]) != len(a[i + 1]):
-            print('ValueError')
-            break
+test1=[[1, 2, 3], [4, 5, 6]]
+test2=[[-1, 1], [10, -10]]
+test3=[[0, 0], [0, 0]]
+test4=[[1, 2], [3]]
+def col_sums(mat: list[list[float | int]]) -> list[float]:
+    for i in range(len(mat) - 1):
+        if len(mat[i]) != len(mat[i + 1]):
+            return 'ValueError'
         else:
             lene = 0
             k = 0
-            for i in a:
+            for i in mat:
                 lene = len(i)
             summ = [0] * lene
-            for i in range(len(a)):
+            for i in range(len(mat)):
                 for j in range(lene):
-                    summ[j] += a[i][j]
-            print(summ)
-    return ''
-print(F(a))
-print(F(b))
-print(F(c))
-print(F(d))
+                    summ[j] += mat[i][j]
+    return summ
+print(col_sums(test1))
+print(col_sums(test2))
+print(col_sums(test3))
+print(col_sums(test4))
 ```
 [Картинка 1] ![2.1.png](images/2.1.png)
 [Картинка 2] ![2.2.png](images/2.2.png)
@@ -262,7 +258,8 @@ print(F(d))
 
 ### Задание 3
 ```python
-def f(fio,group,gpa):
+def format_record(rec: tuple[str, str, float]) -> str:
+    fio,group,gpa=rec
     fio = fio.strip()
     name=[]
     if len(fio)==0 or len(group)==0 or type(gpa)!=float:
@@ -275,11 +272,11 @@ def f(fio,group,gpa):
             return (f'{(name[0])} {(name[1])[0]}.{(name[2])[0]}., гр. {group}, GPA {gpa:.2f}')
         else:
             return (f'{(name[0])} {(name[1])[0]}., гр. {group}, GPA {gpa:.2f}')
-print(f("Иванов Иван Иванович", "BIVT-25", 4.6))
-print(f("Петров Пётр", "IKBO-12", 5.0))
-print(f("Петров Пётр Петрович", "IKBO-12", 5.0))
-print(f("  сидорова  анна   сергеевна ", "ABB-01", 3.999))
-print(f("", "", 5))
+print(format_record(("Иванов Иван Иванович", "BIVT-25", 4.6)))
+print(format_record(("Петров Пётр", "IKBO-12", 5.0)))
+print(format_record(("Петров Пётр Петрович", "IKBO-12", 5.0)))
+print(format_record(("  сидорова  анна   сергеевна ", "ABB-01", 3.999)))
+print(format_record(("", "", 5)))
 
 ```
 [Картинка 1]![3.png](images/3.png)
