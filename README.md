@@ -265,7 +265,85 @@ print(format_record(("Петров Пётр", "IKBO-12", 5.0)))
 print(format_record(("Петров Пётр Петрович", "IKBO-12", 5.0)))
 print(format_record(("  сидорова  анна   сергеевна ", "ABB-01", 3.999)))
 print(format_record(("", "", 5)))
+testcase2 = "hello,world!!!"
+testcase3 = "по-настоящему круто"
+testcase4 = "2025 год"
+testcase5 = "emoji 😀 не слово"
+
+import re
+
+def tokenize(text: str) -> list[str]:
+    shablon = r'\w+(?:-\w+)*'
+    tockens = (re.findall(shablon, normalize(text)))
+    return tockens
+
+print(tokenize(testcase1))
+print(tokenize(testcase2))
+print(tokenize(testcase3))
+print(tokenize(testcase4))
+print(tokenize(testcase5))
+
+testcase1 = ["a", "b", "a", "c", "b", "a"]
+testcase2 = ["bb", "aa", "bb", "aa", "cc"]
+
+
+def count_freq(tokens: list[str]) -> dict[str, int]:
+    fdict = {}
+    for token in tokens:
+        if token in fdict:
+            fdict[token] += 1
+        else:
+            fdict[token] = 1
+    return fdict
+
+def top_n(freq: dict[str, int], n: int = 2) -> list[tuple[str, int]]:
+    items = list(freq.items())
+    sorted_items = sorted(items, key=lambda x: (-x[1], x[0]))
+    return sorted_items[:n]
+
+
+print(count_freq(testcase1))
+print(top_n(count_freq(testcase1)))
+print(count_freq(testcase2))
+print(top_n(count_freq(testcase2)))
 
 ```
 [Картинка 1]![3.png](images/3.png)
 
+## Лабораторная работа 3
+### Задание 1
+```python
+testcase1 = "ПрИвЕт\nМИр\t"
+testcase2 = "ёжик, Ёлка"
+testcase3 = "Hello\r\nWorld"
+testcase4 = "  двойные   пробелы  "
+import re
+def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
+    text = re.sub(r'\s+', ' ', text).strip()
+    text = text.casefold()
+    text = text.replace('ё', 'e')
+    return text
+
+
+print(normalize(testcase1))
+print(normalize(testcase2))
+print(normalize(testcase3))
+print(normalize(testcase4))
+```
+[Картинка 1]![3.1.png](images/3.1.png)
+
+### Задание 2
+```python
+import sys
+import text
+stdin = sys.stdin.read()
+allwords = text.tokenize(stdin)
+uniquewords = text.count_freq(allwords)
+top = text.top_n(uniquewords, 5)
+print(f'Всего слов: {len(allwords)}')
+print(f'Уникальных слов: {len(uniquewords)}')
+print("Топ-5:")
+for i in top:
+    print(i[0] + ':' + str(i[1]))
+```
+[Картинка 1]![3.2.png](images/3.2.png)
