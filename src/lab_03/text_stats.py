@@ -1,0 +1,11 @@
+import sys
+import text
+stdin = sys.stdin.read()
+allwords = text.tokenize(stdin)
+uniquewords = text.count_freq(allwords)
+top = text.top_n(uniquewords, 5)
+print(f'Всего слов: {len(allwords)}')
+print(f'Уникальных слов: {len(uniquewords)}')
+print("Топ-5:")
+for i in top:
+    print(i[0] + ':' + str(i[1]))
