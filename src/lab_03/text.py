@@ -3,9 +3,7 @@ testcase2 = "ёжик, Ёлка"
 testcase3 = "Hello\r\nWorld"
 testcase4 = "  двойные   пробелы  "
 import re
-
 def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
-    # r'\s+' заменяем все все лишние элементы, заменяет на пробел
     text = re.sub(r'\s+', ' ', text).strip()
     text = text.casefold()
     text = text.replace('ё', 'e')
@@ -27,7 +25,6 @@ import re
 
 def tokenize(text: str) -> list[str]:
     shablon = r'\w+(?:-\w+)*'
-    # ищет все по шаблону из норм текста
     tockens = (re.findall(shablon, normalize(text)))
     return tockens
 
@@ -43,23 +40,16 @@ testcase2 = ["bb", "aa", "bb", "aa", "cc"]
 
 def count_freq(tokens: list[str]) -> dict[str, int]:
     fdict = {}
-    # создаем словарь
     for token in tokens:
-        # если в словаре есть например 'а' то счетчик "a" увеличивается
         if token in fdict:
             fdict[token] += 1
         else:
             fdict[token] = 1
     return fdict
 
-
-# УЖЕ ПОСЛЕ СОЗДАНИЯ СЛОВАРЯ ИЗ ЭЛЕМЕНТОВ
 def top_n(freq: dict[str, int], n: int = 2) -> list[tuple[str, int]]:
-    # превращем в представление словаря в списке
     items = list(freq.items())
-    # Сортируем сначала по убыванию частоты, потом по алф
     sorted_items = sorted(items, key=lambda x: (-x[1], x[0]))
-    # Возвращаем первые N элементов
     return sorted_items[:n]
 
 
