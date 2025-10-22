@@ -349,3 +349,161 @@ for i in top:
     print(i[0] + ':' + str(i[1]))
 ```
 [Картинка 1]![3.2.png](images/3.2.png)
+
+## Лабораторная работа 4
+### Задание 1
+```python
+from pathlib import Path
+import csv
+from typing import Iterable, Sequence
+
+def read_text(path: str | Path, encoding: str = "utf-8") -> str:
+    p = Path(path)
+    if p.suffix.lower()  not in ".txt":
+        raise ValueError("Неправильный формат — требуется файл с расширением txt.")
+    try:
+        return p.read_text(encoding=encoding)
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Файл не найден: {p}")
+    except UnicodeDecodeError:
+        raise UnicodeDecodeError("Ошибка декодирования. Попробуйте другую кодировку.")
+
+
+def write_csv(rows: list[tuple | list],path: str | Path,header: tuple[str, ...] | None = None) -> None:
+    p = Path(path)
+    if p.suffix.lower() not in ".csv":
+        raise ValueError("Неправильный формат — требуется файл с расширением .csv")
+
+    rows = list(rows)
+    if rows:
+        length = len(rows[0])
+        for r in rows:
+            if len(r) != length:
+                raise ValueError("Все строки должны иметь одинаковую длину")
+
+    if header is not None and rows:
+        if len(header) != len(rows[0]):
+            raise ValueError("Длина заголовка не совпадает с длиной строк данных")
+    with p.open("w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        if header is not None:
+            w.writerow(header)
+        for r in rows:
+            w.writerow(r)
+```
+#### При больших файлах читаем построчно, не переделывая все строки в список
+```python 
+def write_csv(rows: Iterable[Sequence], path: str | Path,
+              header: tuple[str, ...] | None = None) -> None:
+    p = Path(path)
+    with p.open("w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        if header is not None:
+            w.writerow(header)
+
+        for r in rows:
+            w.writerow(r)
+```
+#### Создание папки data и файла input.txt, так же  check.csv
+```python
+from pathlib import Path
+# cоздаём папку data
+Path("data").mkdir(exist_ok=True)
+#cоздаём тестовый текстовый файл input.txt
+Path("data")/ "input.txt".write_text("Привет, мир! Привет!!!", encoding="utf-8")
+# # Создание CSV
+# csv_path = Path("data") / "check.csv"
+# write_csv([("word", "count"), ("test", 3)], csv_path)
+# print(csv_path)
+```
+#### Чтение другой кодировки
+```python
+def read_text(path: str | Path, encoding: str = "cp1251") -> str:
+    p = Path(path)
+    return p.read_text(encoding=encoding)
+strcp1251=(read_text("data/inputcp1251.txt",encoding='cp1251'))
+print(strcp1251)
+
+```
+[Картинка 1] ![4.1.png](images/4.1.png)
+### Ошибки
+```python
+str_empty=read_text("data/input_empty.txt")
+print(f'выводит:{str_empty}')
+strcp1251_unicodeerror =(read_text("data/inputcp1251.txt",encoding='utf-32'))
+print(strcp1251_unicodeerror)#UnicodeDecodeError
+print(read_text("data/input1.txt"))#FileNotFoundError
+
+```
+[Картинка 2] ![4.2.png](images/4.2.png)
+[Картинка 3] ![4.3.png](images/4.3.png)
+[Картинка 4] ![4.4.png](images/4.4.png) 
+
+```python
+test1=read_text("data/test1.json")
+write_csv(test1,'data/test1.csv')
+test2=read_text("data/test2.txt")
+write_csv(test2,'data/test2.json')
+```
+[Картинка 5] ![4.5.png](images/4.5.png)
+[Картинка 6] ![4.6.png](images/4.6.png)
+
+```python
+def print_csv(path):
+    p=Path(path)
+    #r это read
+    with p.open('r', encoding='utf-8') as f:
+        for line in f:
+            print(line.strip())
+write_csv([], "data/empty.csv", header=("a","b"))
+print_csv("data/empty.csv")
+write_csv([("word","count"),("test",3)], "data/check.csv")
+print_csv("data/check.csv")
+write_csv([("word","count"),("test",3,2)], "data/error.csv")
+```
+ [Картинка 7] ![4.7.png](images/4.7.png)
+ 
+### Задание 2
+```python
+import sys
+from pathlib import Path
+from collections import Counter
+from python_labs.src.lab_03.text import normalize, tokenize, top_n
+from python_labs.src.lab_04.io_txt_csv import read_text, write_csv
+
+
+#Чтение текста
+try:
+    text = read_text(Path("data/input.txt"))
+except FileNotFoundError:
+    print(f"Файл не найден: {Path("data/input.txt")}")
+    raise
+except UnicodeDecodeError:
+    print(f"Ошибка кодировки при чтении файла: {Path("data/input.txt")}")
+    raise
+
+def frequencies_from_text(text: str) -> dict[str, int]:
+    from python_labs.src.lab_03.text import normalize, tokenize, top_n
+    tokens = tokenize(normalize(text))
+    return Counter(tokens)  # dict-like
+
+def sorted_word_counts(freq: dict[str, int]) -> list[tuple[str, int]]:
+    return sorted(freq.items(), key=lambda kv: (-kv[1], kv[0]))
+
+text=sorted_word_counts(frequencies_from_text(read_text("data/input.txt")))
+write_csv(text, "data/report.csv", header=("word", "count"))
+
+# Резюме
+tekst = read_text("data/input.txt")
+tokens = (tokenize(normalize(tekst)))
+count=Counter(tokens)
+sorted_freq = sorted_word_counts(count)
+
+print(f"Всего слов: {len(tokens)}")
+print(f"Уникальных слов: {len(count)}")
+print(f"Топ-5:")
+for word, col in sorted_freq[:5]:
+    print(f"{word}:{col}")
+```
+[Картинка 8]![4.8.png](images/4.8.png)
+[Картинка 9]![4.9.png](images/4.9.png)
