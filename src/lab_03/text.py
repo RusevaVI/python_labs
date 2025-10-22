@@ -5,8 +5,10 @@ testcase4 = "  двойные   пробелы  "
 import re
 def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
     text = re.sub(r'\s+', ' ', text).strip()
-    text = text.casefold()
-    text = text.replace('ё', 'e')
+    if casefold:
+        text = text.casefold()
+    if yo2e:
+        text = text.replace('ё', 'e')
     return text
 
 
