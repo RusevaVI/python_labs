@@ -1,4 +1,5 @@
 def format_record(rec: tuple[str, str, float]) -> str:
+
     fio,group,gpa=rec
     fio = fio.strip()
     name=[]
@@ -7,7 +8,6 @@ def format_record(rec: tuple[str, str, float]) -> str:
     else:
         for i in fio.split():
             name.append(i.capitalize())
-
         if len(name)==3:
             return (f'{(name[0])} {(name[1])[0]}.{(name[2])[0]}., гр. {group}, GPA {gpa:.2f}')
         else:
