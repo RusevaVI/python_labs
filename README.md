@@ -427,6 +427,7 @@ print(strcp1251)
 ```
 [Картинка 1] ![4.1.png](images/4.1.png)
 ### Ошибки
+####1) Пустой файл, ошибки UnicodeDecodeError,FileNotFoundError
 ```python
 str_empty=read_text("data/input_empty.txt")
 print(f'выводит:{str_empty}')
@@ -438,7 +439,7 @@ print(read_text("data/input1.txt"))#FileNotFoundError
 [Картинка 2] ![4.2.png](images/4.2.png)
 [Картинка 3] ![4.3.png](images/4.3.png)
 [Картинка 4] ![4.4.png](images/4.4.png) 
-
+####2) Проверка на создание файла в формате txt и вывод в csv
 ```python
 test1=read_text("data/test1.json")
 write_csv(test1,'data/test1.csv')
@@ -447,7 +448,7 @@ write_csv(test2,'data/test2.json')
 ```
 [Картинка 5] ![4.5.png](images/4.5.png)
 [Картинка 6] ![4.6.png](images/4.6.png)
-
+####3) Только заголовок, , без аголовка, разная длина 
 ```python
 def print_csv(path):
     p=Path(path)
