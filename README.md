@@ -359,7 +359,7 @@ from typing import Iterable, Sequence
 
 def read_text(path: str | Path, encoding: str = "utf-8") -> str:
     p = Path(path)
-    if p.suffix.lower()  not in ".txt":
+    if p.suffix.lower() != ".txt":
         raise ValueError("Неправильный формат — требуется файл с расширением txt.")
     try:
         return p.read_text(encoding=encoding)
@@ -371,7 +371,7 @@ def read_text(path: str | Path, encoding: str = "utf-8") -> str:
 
 def write_csv(rows: list[tuple | list],path: str | Path,header: tuple[str, ...] | None = None) -> None:
     p = Path(path)
-    if p.suffix.lower() not in ".csv":
+    if p.suffix.lower() != ".csv":
         raise ValueError("Неправильный формат — требуется файл с расширением .csv")
 
     rows = list(rows)
