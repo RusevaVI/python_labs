@@ -437,6 +437,7 @@ print(read_text("data/input1.txt"))#FileNotFoundError
 
 ```
 [Картинка 2] ![4.2.png](images/4.2.png)
+
 [Картинка 3] ![4.3.png](images/4.3.png)
 [Картинка 4] ![4.4.png](images/4.4.png) 
 #### 2) Проверка на создание файла в формате txt и в csv
@@ -447,6 +448,7 @@ test2=read_text("data/test2.txt")
 write_csv(test2,'data/test2.json')
 ```
 [Картинка 5] ![4.5.png](images/4.5.png)
+
 [Картинка 6] ![4.6.png](images/4.6.png)
 #### 3) Только заголовок,без заголовка, разная длина 
 ```python
@@ -506,4 +508,5 @@ for word, col in sorted_freq[:5]:
     print(f"{word}:{col}")
 ```
 [Картинка 8]![4.8.png](images/4.8.png)
+
 [Картинка 9]![4.9.png](images/4.9.png)
