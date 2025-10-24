@@ -279,8 +279,10 @@ testcase4 = "  двойные   пробелы  "
 import re
 def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
     text = re.sub(r'\s+', ' ', text).strip()
-    text = text.casefold()
-    text = text.replace('ё', 'e')
+    if casefold:
+        text = text.casefold()
+    if yo2e:
+        text = text.replace('ё', 'e')
     return text
 
 
@@ -364,7 +366,7 @@ def read_text(path: str | Path, encoding: str = "utf-8") -> str:
     try:
         return p.read_text(encoding=encoding)
     except FileNotFoundError:
-        raise FileNotFoundError(f"Файл не найден: {p}")
+        raise FileNotFoundError(f"Файл не найден")
     except UnicodeDecodeError:
         raise UnicodeDecodeError("Ошибка декодирования. Попробуйте другую кодировку.")
 
@@ -393,14 +395,12 @@ def write_csv(rows: list[tuple | list],path: str | Path,header: tuple[str, ...] 
 ```
 #### При больших файлах читаем построчно, не переделывая все строки в список
 ```python 
-def write_csv(rows: Iterable[Sequence], path: str | Path,
-              header: tuple[str, ...] | None = None) -> None:
+def write_csv(rows: Iterable[Sequence], path: str | Path, header: tuple[str, ...] | None = None) -> None:
     p = Path(path)
     with p.open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         if header is not None:
             w.writerow(header)
-
         for r in rows:
             w.writerow(r)
 ```
@@ -411,10 +411,10 @@ from pathlib import Path
 Path("data").mkdir(exist_ok=True)
 #cоздаём тестовый текстовый файл input.txt
 Path("data")/ "input.txt".write_text("Привет, мир! Привет!!!", encoding="utf-8")
-# # Создание CSV
-# csv_path = Path("data") / "check.csv"
-# write_csv([("word", "count"), ("test", 3)], csv_path)
-# print(csv_path)
+# Создание CSV
+csv_path = Path("data") / "check.csv"
+write_csv([("word", "count"), ("test", 3)], csv_path)
+print(csv_path)
 ```
 #### Чтение другой кодировки
 ```python
@@ -439,7 +439,7 @@ print(read_text("data/input1.txt"))#FileNotFoundError
 [Картинка 2] ![4.2.png](images/4.2.png)
 [Картинка 3] ![4.3.png](images/4.3.png)
 [Картинка 4] ![4.4.png](images/4.4.png) 
-####2) Проверка на создание файла в формате txt и вывод в csv
+####2) Проверка на создание файла в формате txt и в csv
 ```python
 test1=read_text("data/test1.json")
 write_csv(test1,'data/test1.csv')
@@ -448,7 +448,7 @@ write_csv(test2,'data/test2.json')
 ```
 [Картинка 5] ![4.5.png](images/4.5.png)
 [Картинка 6] ![4.6.png](images/4.6.png)
-####3) Только заголовок, , без аголовка, разная длина 
+####3) Только заголовок,без заголовка, разная длина 
 ```python
 def print_csv(path):
     p=Path(path)
@@ -494,7 +494,6 @@ def sorted_word_counts(freq: dict[str, int]) -> list[tuple[str, int]]:
 text=sorted_word_counts(frequencies_from_text(read_text("data/input.txt")))
 write_csv(text, "data/report.csv", header=("word", "count"))
 
-# Резюме
 tekst = read_text("data/input.txt")
 tokens = (tokenize(normalize(tekst)))
 count=Counter(tokens)
