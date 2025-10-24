@@ -1,4 +1,3 @@
-import sys
 from pathlib import Path
 from collections import Counter
 from python_labs.src.lab_03.text import normalize, tokenize, top_n
@@ -18,7 +17,7 @@ except UnicodeDecodeError:
 def frequencies_from_text(text: str) -> dict[str, int]:
     from python_labs.src.lab_03.text import normalize, tokenize, top_n
     tokens = tokenize(normalize(text))
-    return Counter(tokens)  # dict-like
+    return Counter(tokens)
 
 def sorted_word_counts(freq: dict[str, int]) -> list[tuple[str, int]]:
     return sorted(freq.items(), key=lambda kv: (-kv[1], kv[0]))
@@ -26,7 +25,6 @@ def sorted_word_counts(freq: dict[str, int]) -> list[tuple[str, int]]:
 text=sorted_word_counts(frequencies_from_text(read_text("data/input.txt")))
 write_csv(text, "data/report.csv", header=("word", "count"))
 
-# Резюме
 tekst = read_text("data/input.txt")
 tokens = (tokenize(normalize(tekst)))
 count=Counter(tokens)
