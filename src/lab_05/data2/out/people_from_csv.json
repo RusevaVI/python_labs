@@ -1,18 +1,14 @@
 [
   {
     "name": "Alice",
-    "age": 22
+    "age": "22"
   },
   {
     "name": "Bob",
-    "age": 25
+    "age": "25"
   },
   {
     "name": "John",
     "age": ""
-  },
-  {
-    "name": "Extra",
-    "age": 99
   }
 ]
