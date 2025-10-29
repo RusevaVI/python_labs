@@ -32,9 +32,10 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
         ws.append(row)
 
     # Автоширина
-    for column_cells in ws.columns:
-        max_len = max((len(str(cell.value)) if cell.value else 0) for cell in column_cells)
-        ws.column_dimensions[column_cells[0].column_letter].width = max(max_len + 2, 8)
+    for col in ws.columns:
+        max_len = max(len(str(cell.value or "")) for cell in col)
+        col_letter = col[0].column_letter
+        ws.column_dimensions[col_letter].width = max(max_len + 2, 8)
 
     # Проверка директории назначения
     if not p_xlsx.parent.exists():
@@ -42,38 +43,30 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
 
     # Сохранение
     wb.save(p_xlsx)
-# if __name__ == "__main__":
-#     from pathlib import Path
-#     import csv
-#
-#     # --- Конвертация people.csv → people.xlsx ---
-#     csv_to_xlsx("data2/samples/people.csv", "data2/out/people.xlsx")
-#     print("✅ CSV 'people.csv' успешно преобразован в XLSX!")
-#
-#     # --- Конвертация cities.csv → cities.xlsx ---
-#     csv_input = Path("data2/samples/cities.csv")
-#     xlsx_output = Path("data2/out/cities.xlsx")
-#
-#     # Создаём папку out, если её нет
-#     xlsx_output.parent.mkdir(parents=True, exist_ok=True)
-#
-#     # Если CSV нет — создаём примерный
-#     if not csv_input.exists():
-#         csv_input.parent.mkdir(parents=True, exist_ok=True)
-#         example_rows = [
-#             ["city", "country", "population"],
-#             ["Moscow", "Russia", "12655050"],
-#             ["Saint Petersburg", "Russia", "5384342"],
-#             ["Kazan", "Russia", "1300000"]
-#         ]
-#         with csv_input.open("w", newline="", encoding="utf-8") as f:
-#             writer = csv.writer(f)
-#             writer.writerows(example_rows)
-#         print(f"Создан примерный CSV файл: {csv_input}")
-#
-#     # Конвертация CSV → XLSX
-#     csv_to_xlsx(csv_input, xlsx_output)
-#     print("✅ CSV 'cities.csv' успешно преобразован в XLSX!")
+#ПРИМЕР
+    # Конвертация people.csv → people.xlsx
+csv_to_xlsx("data2/samples/people.csv", "data2/out/people.xlsx")
+
+csv_input = Path("data2/samples/cities.csv")
+xlsx_output = Path("data2/out/cities.xlsx")
+
+# Создаём папку out, если её нет
+xlsx_output.parent.mkdir(parents=True, exist_ok=True)
+csv_input.parent.mkdir(parents=True, exist_ok=True)
+
+# Записываем пример в CSV
+example_rows = [
+    ["city", "country", "language"],
+    ["Moscow", "Russia", "Russian"],
+    ["Tokyo", "Japan", "Japanese"],
+    ["Paris", "France", "French"],
+]
+with csv_input.open("w", newline="", encoding="utf-8") as f:
+    writer = csv.writer(f)
+    writer.writerows(example_rows)
+
+# Конвертация CSV → XLSX
+csv_to_xlsx(csv_input, xlsx_output)
 
 #csv_to_xlsx("data2/samples/people_empty.csv", "data2/samples/people2.xlsx")
 #csv_to_xlsx("data2/samples/people_NO_file.csv", "data/samples/people3.xlsx")
