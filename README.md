@@ -607,14 +607,14 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
     if len(reread) != len(data):
         raise ValueError("Количество записей не совпадает после конвертации")
 ```
-Проверка ошибок:
-1) Неверный тип файла, пустой JSON или CSV 
+#### Проверка ошибок:
+#### 1) Неверный тип файла, пустой JSON или CSV 
 [Картинка 1]![5.1.png](images/5.1.png)
 
 [Картинка 2]![5.4.png](images/5.4.png)
 
 [Картинка 3]![5.2.png](images/5.2.png)
-2) Осутствует файл
+#### 2) Осутствует файл
 [Картинка 4]![5.3.png](images/5.3.png)
 
 [Картинка 5]![img.png](img.png)
@@ -655,38 +655,109 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
         ws.append(row)
 
     # Автоширина
-    for column_cells in ws.columns:
-        max_len = max((len(str(cell.value)) if cell.value else 0) for cell in column_cells)
-        ws.column_dimensions[column_cells[0].column_letter].width = max(max_len + 2, 8)
-
+    for col in ws.columns:
+    max_len = max(len(str(cell.value or "")) for cell in col)
+    col_letter = col[0].column_letter
+    ws.column_dimensions[col_letter].width = max(max_len + 2, 8)
     # Проверка директории назначения
     if not p_xlsx.parent.exists():
         raise FileNotFoundError(f"Директория для XLSX не найдена")
 
     # Сохранение
     wb.save(p_xlsx)
+
 ```
-Проверка ошибок:
-1) Неверный тип файла, пустой JSON или CSV 
+#### Проверка ошибок:
+#### 1) Неверный тип файла, пустой JSON или CSV 
 [Картинка 1]![5.6.png](images/5.6.png)
 
 [Картинка 2]![5.8.png](images/5.8.png)
 
-2) Осутствует файл
+#### 2) Осутствует файл
 [Картинка 3]![5.7.png](images/5.7.png)
 
-Проверка и валидация 
-1) Пустой JSON
+#### Проверка и валидация 
+#### 1) Пустой JSON
 [Картинка 1] ![5.9.png](images/5.9.png)
-2) Список с не-словарами
+#### 2) Список с не-словарами
 [Картинка 2] ![5.10.png](images/5.10.png)
-3) CSV без заголовка или пустой
+#### 3) CSV без заголовка или пустой
 [Картинка 3] ![5.11.png](images/5.11.png)
-4) CSV отсутствует
+#### 4) CSV отсутствует
 [Картинка 4] ![5.7.png](images/5.7.png)
-5) Проверка: количество записей совпадает до и после конвертации.
+#### 5) Проверка: количество записей совпадает до и после конвертации.
 ```python
 reread = json.loads(p_json.read_text(encoding="utf-8"))
     if len(reread) != len(data):
         raise ValueError("Количество записей не совпадает после конвертации")
 ```
+### Пример работы json_csv.py
+```python
+data_dir = Path("data2/samples")
+out_dir = Path("data2/out")
+data_dir.mkdir(parents=True, exist_ok=True)
+out_dir.mkdir(parents=True, exist_ok=True)
+
+json_file = data_dir / "people.json"
+csv_file = data_dir / "people.csv"
+csv_from_json = out_dir / "people_from_json.csv"
+json_from_csv = out_dir / "people_from_csv.json"
+
+# Примерные данные
+people_json = [
+    {"name": "Alice", "age": "22", "city": "SPB"},
+    {"name": "Bob", "age": "25", "city": "Moscow"}
+]
+
+people_csv = [
+    ["name", "age",'city'],
+    ["Alice", "22",'SPB'],
+    ["Bob", "25",'Moscow']
+]
+
+# Запись исходных файлов
+with json_file.open("w", encoding="utf-8") as f:
+    json.dump(people_json, f, ensure_ascii=False, indent=2)
+
+with csv_file.open("w", newline="", encoding="utf-8") as f:
+    writer = csv.writer(f)
+    writer.writerows(people_csv)
+
+# Конвертация JSON → CSV
+json_to_csv(json_file, csv_from_json)
+# Конвертация CSV → JSON
+csv_to_json(csv_file, json_from_csv)
+```
+[Картинка 1] ![5.12.png](images/5.12.png)
+
+[Картинка 2] ![5.13.png](images/5.13.png)
+### Пример работы csv_xlsx.py
+```python
+#ПРИМЕР
+    # Конвертация people.csv → people.xlsx
+csv_to_xlsx("data2/samples/people.csv", "data2/out/people.xlsx")
+
+csv_input = Path("data2/samples/cities.csv")
+xlsx_output = Path("data2/out/cities.xlsx")
+
+# Создаём папку out, если её нет
+xlsx_output.parent.mkdir(parents=True, exist_ok=True)
+csv_input.parent.mkdir(parents=True, exist_ok=True)
+
+# Записываем пример в CSV 
+example_rows = [
+    ["city", "country", "language"],
+    ["Moscow", "Russia", "Russian"],
+    ["Tokyo", "Japan", "Japanese"],
+    ["Paris", "France", "French"],
+]
+with csv_input.open("w", newline="", encoding="utf-8") as f:
+    writer = csv.writer(f)
+    writer.writerows(example_rows)
+
+# Конвертация CSV → XLSX
+csv_to_xlsx(csv_input, xlsx_output)
+```
+[Картинка 1] ![5.14.png](images/5.14.png)
+
+[Картинка 2] ![5.15.png](images/5.15.png)
