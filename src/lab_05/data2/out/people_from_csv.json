@@ -1,14 +1,12 @@
 [
   {
     "name": "Alice",
-    "age": "22"
+    "age": "22",
+    "city": "SPB"
   },
   {
     "name": "Bob",
-    "age": "25"
-  },
-  {
-    "name": "John",
-    "age": ""
+    "age": "25",
+    "city": "Moscow"
   }
 ]
