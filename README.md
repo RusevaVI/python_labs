@@ -870,8 +870,10 @@ if __name__ == "__main__":
 #### Модуль src/lab06/cli_text.py с подкомандами:
 
 stats --input <txt> [--top 5] 
+
 [Картинка 1] ![6.6.png](images/6.6.png)
 cat --input <path> [-n] 
+
 [Картинка 1] ![6.5.png](images/6.5.png)
 #### Модуль src/lab06/cli_convert.py с подкомандами:
 json2csv --in data/samples/people.json --out data/out/people.csv
