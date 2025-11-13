@@ -761,3 +761,127 @@ csv_to_xlsx(csv_input, xlsx_output)
 [Картинка 1] ![5.14.png](images/5.14.png)
 
 [Картинка 2] ![5.15.png](images/5.15.png)
+
+## Лабораторная работа 6
+### Задание 1
+```python
+import argparse
+import sys
+import os
+from python_labs.src.lab_03.text import tokenize, count_freq, top_n # пример функции из ЛР3
+
+def main():
+    parser = argparse.ArgumentParser(description="CLI для анализа текста")
+    subparsers = parser.add_subparsers(dest="command")
+
+    # cat
+    cat_parser = subparsers.add_parser("cat", help="Вывести содержимое файла")
+    cat_parser.add_argument("--input", required=True, help="Путь к файлу")
+    cat_parser.add_argument("-n", action="store_true", help="Нумеровать строки")
+
+    # stats
+    stats_parser = subparsers.add_parser("stats", help="Частоты слов")
+    stats_parser.add_argument("--input", required=True, help="Путь к файлу")
+    stats_parser.add_argument("--top", type=int, default=5, help="Сколько топ слов показать")
+
+    args = parser.parse_args()
+
+    if args.command == "cat":
+        with open(args.input, encoding="utf-8") as f:
+            for i, line in enumerate(f, start=1):
+                if args.n:
+                    print(f"{i}: {line.rstrip()}")
+                else:
+                    print(line.rstrip())
+
+
+    elif args.command == "stats":
+        with open(args.input, encoding="utf-8") as f:
+            text = f.read()
+        tokens = tokenize(text)
+        freqs = count_freq(tokens)
+        for word, count in top_n(freqs, args.top):
+            print(f"{word}: {count}")
+
+if __name__ == "__main__":
+    main()
+```
+### Задание 2
+```python
+import argparse
+import sys
+import os
+from python_labs.src.lab_05.json_csv import json_to_csv, csv_to_json
+from python_labs.src.lab_05.csv_xlsx import csv_to_xlsx
+
+def main():
+    parser = argparse.ArgumentParser(description="Конвертеры данных")
+    sub = parser.add_subparsers(dest="cmd", required=True)
+
+    # --- json2csv ---
+    p1 = sub.add_parser("json2csv", help="Конвертировать JSON → CSV")
+    p1.add_argument("--in", dest="input", required=True, help="Путь к входному JSON-файлу")
+    p1.add_argument("--out", dest="output", required=True, help="Путь для сохранения CSV-файла")
+
+    # --- csv2json ---
+    p2 = sub.add_parser("csv2json", help="Конвертировать CSV → JSON")
+    p2.add_argument("--in", dest="input", required=True, help="Путь к входному CSV-файлу")
+    p2.add_argument("--out", dest="output", required=True, help="Путь для сохранения JSON-файла")
+
+    # --- csv2xlsx ---
+    p3 = sub.add_parser("csv2xlsx", help="Конвертировать CSV → XLSX")
+    p3.add_argument("--in", dest="input", required=True, help="Путь к входному CSV-файлу")
+    p3.add_argument("--out", dest="output", required=True, help="Путь для сохранения XLSX-файла")
+
+    args = parser.parse_args()
+
+    # --- Проверяем, что входной файл существует ---
+    if not os.path.exists(args.input):
+        raise FileNotFoundError(f"Входной файл '{args.input}' не найден.")
+
+    # --- Проверяем, что указан выходной файл ---
+    if not args.output:
+        parser.error("Не указан выходной файл (--out).")
+
+    # === Выполнение подкоманды ===
+    if args.cmd == "json2csv":
+        json_to_csv(args.input, args.output)
+    elif args.cmd == "csv2json":
+        csv_to_json(args.input, args.output)
+    elif args.cmd == "csv2xlsx":
+        csv_to_xlsx(args.input, args.output)
+    else:
+        parser.error("Неизвестная команда. Используйте --help для справки.")
+if __name__ == "__main__":
+    main()
+```
+#### Проверка
+1) вывод строк с номерами
+[Картинка 1] ![6.1.png](images/6.1.png)
+
+[Картинка 2] ![6.2.png](images/6.2.png)
+2) вывод топ‑слов
+[Картинка 1] ![6.3.png](images/6.3.png)
+
+3) корректная конвертация без ошибок
+[Картинка 1] ![6.4.png](images/6.4.png)
+
+
+#### Модуль src/lab06/cli_text.py с подкомандами:
+
+stats --input <txt> [--top 5] 
+[Картинка 1] ![6.6.png](images/6.6.png)
+cat --input <path> [-n] 
+[Картинка 1] ![6.5.png](images/6.5.png)
+#### Модуль src/lab06/cli_convert.py с подкомандами:
+json2csv --in data/samples/people.json --out data/out/people.csv
+[Картинка 1] ![6.7.png](images/6.7.png)
+csv2json --in data/samples/people.csv --out data/out/people.json
+[Картинка 1] ![6.8.png](images/6.8.png)
+csv2xlsx --in data/samples/people.csv --out data/out/people.xlsx
+[Картинка 1] ![6.9.png](images/6.9.png)
+
+#### Обработка ошибок
+[Картинка 1] ![6.10.png](images/6.10.png)
+
+[Картинка 2] ![6.11.png](images/6.11.png)
