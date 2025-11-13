@@ -869,18 +869,18 @@ if __name__ == "__main__":
 
 #### Модуль src/lab06/cli_text.py с подкомандами:
 
-stats --input <txt> [--top 5] 
+##### stats --input <txt> [--top 5] 
 
 [Картинка 1] ![6.6.png](images/6.6.png)
-cat --input <path> [-n] 
+###### cat --input <path> [-n] 
 
 [Картинка 1] ![6.5.png](images/6.5.png)
 #### Модуль src/lab06/cli_convert.py с подкомандами:
-json2csv --in data/samples/people.json --out data/out/people.csv
+##### json2csv --in data/samples/people.json --out data/out/people.csv
 [Картинка 1] ![6.7.png](images/6.7.png)
-csv2json --in data/samples/people.csv --out data/out/people.json
+##### csv2json --in data/samples/people.csv --out data/out/people.json
 [Картинка 1] ![6.8.png](images/6.8.png)
-csv2xlsx --in data/samples/people.csv --out data/out/people.xlsx
+##### csv2xlsx --in data/samples/people.csv --out data/out/people.xlsx
 [Картинка 1] ![6.9.png](images/6.9.png)
 
 #### Обработка ошибок
