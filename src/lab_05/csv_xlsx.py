@@ -23,7 +23,7 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
     if not rows or all(not any(row) for row in rows):
         raise ValueError("Пустой CSV или неподдерживаемая структура")
 
-    # Создание XLSX
+    # Создание XLS
     wb = Workbook()
     ws = wb.active
     ws.title = "Sheet1"
@@ -45,7 +45,7 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
     wb.save(p_xlsx)
 #ПРИМЕР
     # Конвертация people.csv → people.xlsx
-csv_to_xlsx("data2/samples/people.csv", "data2/out/people.xlsx")
+csv_to_xlsx("data2/samples/people.csv", "data2/out/people1.xlsx")
 
 csv_input = Path("data2/samples/cities.csv")
 xlsx_output = Path("data2/out/cities.xlsx")
