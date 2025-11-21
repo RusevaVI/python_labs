@@ -857,13 +857,17 @@ if __name__ == "__main__":
 ```
 #### Проверка
 1) вывод строк с номерами
+
 [Картинка 1] ![6.1.png](images/6.1.png)
 
 [Картинка 2] ![6.2.png](images/6.2.png)
+
 2) вывод топ‑слов
+
 [Картинка 1] ![6.3.png](images/6.3.png)
 
 3) корректная конвертация без ошибок
+
 [Картинка 1] ![6.4.png](images/6.4.png)
 
 
@@ -872,18 +876,27 @@ if __name__ == "__main__":
 ##### stats --input <txt> [--top 5] 
 
 [Картинка 1] ![6.6.png](images/6.6.png)
+
 ###### cat --input <path> [-n] 
 
 [Картинка 1] ![6.5.png](images/6.5.png)
 #### Модуль src/lab06/cli_convert.py с подкомандами:
 ##### json2csv --in data/samples/people.json --out data/out/people.csv
+
+
 [Картинка 1] ![6.7.png](images/6.7.png)
+
 ##### csv2json --in data/samples/people.csv --out data/out/people.json
+
+
 [Картинка 1] ![6.8.png](images/6.8.png)
+
 ##### csv2xlsx --in data/samples/people.csv --out data/out/people.xlsx
+
 [Картинка 1] ![6.9.png](images/6.9.png)
 
 #### Обработка ошибок
+
 [Картинка 1] ![6.10.png](images/6.10.png)
 
 [Картинка 2] ![6.11.png](images/6.11.png)
