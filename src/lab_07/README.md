@@ -241,4 +241,4 @@ branch = true
 
 [Картинка 3] ![7.3.png](images/7.3.png)
 
-[Картинка 4] ![7.4.png](images/7.4.png)
+[Картинка 4] ![7.4.png](../../images/7.4.png)
