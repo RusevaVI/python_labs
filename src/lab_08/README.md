@@ -102,11 +102,11 @@ def students_from_json(path: str) -> list[Student]:
 ### Ошибки
 1) Неверный формат даты
 
-[Картинка 1]![8.1.png](images/01.png)
+[Картинка 1]! [8.1.png](images/01.png)
 
 2) gpa нельзя привести к числу
 
-[Картинка 2]![8.2.png](images/01.png)
+[Картинка 2]! [8.2.png](images/01.png)
 
 3) gpa вне диапазона
 
