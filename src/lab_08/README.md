@@ -98,6 +98,10 @@ def students_from_json(path: str) -> list[Student]:
         students.append(Student.from_dict(item))
     return students
 ```
+### Вывод
+![8.7.png](../../images/8.7.png)
+
+![8.8.png](../../images/8.8.png)
 
 ### Ошибки
 1) Неверный формат даты
