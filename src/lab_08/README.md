@@ -99,9 +99,9 @@ def students_from_json(path: str) -> list[Student]:
     return students
 ```
 ### Вывод
-![8.7.png](../../images/8.7.png)
+[Картинка 1] ![8.7.png](../../images/8.7.png)
 
-![8.8.png](../../images/8.8.png)
+[Картинка 2] ![8.8.png](../../images/8.8.png)
 
 ### Ошибки
 1) Неверный формат даты
