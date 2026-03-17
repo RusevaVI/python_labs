@@ -52,6 +52,12 @@ def demonstrate():
     book1.borrow()
     print(book1)
 
+    print("\nПроверка зависимости от состояния (попытка изменить цену выданной книги):")
+    try:
+        book1.price = 1500
+    except ValueError as e:
+        print(f"Ошибка логики состояния: {e}")
+
     try:
         book1.calculate_rental_price(3)
     except ValueError as e:
