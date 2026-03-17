@@ -76,4 +76,4 @@
 ### Скрины работы demo
 ![image1.png](../../images/image1.png)
 ![img.png](img.png)
-![img_1.png](img_1.png)
+![kjh.png](../../images/kjh.png)
