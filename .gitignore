@@ -1,3 +1,7 @@
+.cache/
+.local/
+.pytest_cache/
+build/
 images/
 *.egg-info/
 .coverage
