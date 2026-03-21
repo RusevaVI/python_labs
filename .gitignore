@@ -1,3 +1,6 @@
+images/
+*.egg-info/
+.coverage
 __pycache__/
 *.py[cod]
 venv/
