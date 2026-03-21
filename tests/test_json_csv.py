@@ -20,7 +20,8 @@ def test_json_to_csv_roundtrip(tmp_path: Path):
     json_to_csv(str(src), str(dst))
 
     # читаем CSV обратно
-    with dst.open(encoding="utf-8", newline="") as f:
+    with dst.open(encoding="utf-8", newline="") as f: #открываем получившийся CSV-файл;
+	#	с помощью csv.DictReader читаем строки в виде словарей ({"name": "...", "age": "..."}).
         rows = list(csv.DictReader(f))
 
     # количество записей
@@ -44,8 +45,8 @@ def test_csv_to_json_roundtrip(tmp_path: Path):
 
     # пишем CSV-файл
     with src.open("w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
+        writer = csv.DictWriter(f, fieldnames=fieldnames) #Это создаёт объект «писатель CSV», который умеет принимать данные в виде словарей.
+        writer.writeheader()#Эта команда записывает первую строку CSV — заголовки столбцов
         writer.writerows(rows)
 
     # конвертация CSV -> JSON
@@ -53,7 +54,7 @@ def test_csv_to_json_roundtrip(tmp_path: Path):
 
     # читаем JSON обратно
     text = dst.read_text(encoding="utf-8")
-    data = json.loads(text)
+    data = json.loads(text) #десериализует JSON-строку обратно в Python-объект.
 
     # это должен быть список словарей
     assert isinstance(data, list)
